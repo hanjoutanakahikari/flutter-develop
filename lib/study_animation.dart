@@ -125,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin 
               ),
             )
             ),
+            //くるくるするやつ
             AnimatedBuilder(
               animation: _animation, 
               builder: (context,_){
