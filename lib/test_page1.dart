@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'test_page2.dart';
 
 class TestPage1 extends StatelessWidget {
@@ -10,13 +11,9 @@ class TestPage1 extends StatelessWidget {
         title: const Text("test1"),
       ),           
       body: Center(
-        child: TextButton(
-          onPressed: () =>{
-            Navigator.of(context).pushNamed("/test2")
-            //あるいは
-            //Navigator.pushNamed(context, "/test2")
-          },
-          child: const Text("進む", style:TextStyle(fontSize: 80)),
+        child: Container(
+          color:Colors.redAccent,
+          child: const Text("Test1", style:TextStyle(fontSize: 80)),
         )
       )
     );        

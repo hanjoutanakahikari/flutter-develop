@@ -22,11 +22,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      routes:{
-        "/test1":(BuildContext context) => TestPage1(),
-        "/test2" :(BuildContext context) => TestPage2(),
-        "/test3" :(context) => TestPage3()  
-      }
     );
   }
 }
@@ -50,6 +45,33 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  late PageController _pageController;
+  int _selectedIndex = 0;
+
+  final _Pages = [
+    TestPage1(),
+    TestPage2(),
+    TestPage3()
+  ];
+
+  @override
+  void initState(){
+    super.initState();
+    _pageController = PageController(initialPage: _selectedIndex);
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    _pageController.dispose();
+  }
+
+  void _onPageChanged(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     
@@ -60,7 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
         
         title: Text(widget.title),
       ),        
-      body: TestPage1()
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        children: _Pages,
+      )
     );        
       
   }

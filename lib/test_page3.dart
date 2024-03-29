@@ -9,20 +9,10 @@ class TestPage3 extends StatelessWidget {
         title: const Text("test3"),
       ),           
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () =>{
-                Navigator.of(context).pushNamed("/test2")
-                //あるいは
-                //Navigator.pushNamed(context, "/test2")
-              },
-              child: const Text("戻る", style: TextStyle(fontSize: 80),) 
-            )
-          ],
-        ) 
-      )
+        child: Container(
+              child: const Text("test3", style:TextStyle(fontSize: 80)),
+        ),          
+      ) 
     );        
       
   }
