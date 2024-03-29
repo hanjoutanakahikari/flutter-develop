@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>フォトライブラリを利用する理由を記載(気分です)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>カメラにアクセスする理由を記載(気分です)</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>マイクにアクセスする理由を記載(気分です)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
