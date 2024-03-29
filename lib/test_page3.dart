@@ -14,8 +14,9 @@ class TestPage3 extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () =>{
-                Navigator.of(context)
-                  .pop()
+                Navigator.of(context).pushNamed("/test2")
+                //あるいは
+                //Navigator.pushNamed(context, "/test2")
               },
               child: const Text("戻る", style: TextStyle(fontSize: 80),) 
             )

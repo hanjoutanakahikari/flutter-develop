@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 //別dartはimportしておく
 import 'test_page1.dart';
+import 'test_page2.dart';
+import 'test_page3.dart';
 
 
 void main() {
@@ -20,6 +22,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes:{
+        "/test1":(BuildContext context) => TestPage1(),
+        "/test2" :(BuildContext context) => TestPage2(),
+        "/test3" :(context) => TestPage3()  
+      }
     );
   }
 }
