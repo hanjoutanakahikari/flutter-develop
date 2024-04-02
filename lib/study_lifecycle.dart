@@ -35,7 +35,48 @@ class MyHomePage extends StatefulWidget {
   }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver{
+  
+  @override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+  
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state){
+    print("アプリは今 $state です");
+    
+    switch(state){
+      case AppLifecycleState.inactive:
+      print("非アクティブです");
+      break;
+
+      case AppLifecycleState.paused:
+      print("停止されました");
+      break;
+
+      case AppLifecycleState.resumed:
+      print("再開されました");
+      break;
+
+      case AppLifecycleState.detached:
+      print("破棄されました");
+      break;
+
+      case AppLifecycleState.hidden:
+      print("表示されません");
+      break;
+    }
+  }
+  
+  
   int _counter = 0;
 
   void _incrementCounter() {
@@ -43,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print("setState 状態が変わりました");   
       _counter++;
     });
-    nextpage();
+    //nextpage();
   }
 
   void nextpage() async{
@@ -53,11 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }));
   }
 
+  /*
   @override
   void initState(){
     super.initState();
     print("initState　stateを初期化します");
   }
+  */
 
   @override
   void didChangeDependencies(){
@@ -105,9 +148,11 @@ class _MyHomePageState extends State<MyHomePage> {
     print("deactivate stateがツリーから削除されます");
   }
 
+  /*
   @override
   void dispose(){
     super.dispose();
     print("dispose stateは削除され二度とビルドされません");
   }
+  */
 }
