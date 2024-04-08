@@ -1,0 +1,19 @@
+{
+    "@@locale":"en",
+    "helloWorld": "Hi, {name}! Hello World!",
+    "@helloWorld": {
+        "description": "プログラムとの最初の挨拶",
+        "placeholders":{
+            "name":{
+                "description":"username",
+                "example":"名無しの助兵衛"
+            }
+        },
+        "context": "homepage"
+    },
+    "login":"Login",
+    "info":"Info",
+    "allow":"ALLOW~",
+    "deny":"DENY!"
+
+}
