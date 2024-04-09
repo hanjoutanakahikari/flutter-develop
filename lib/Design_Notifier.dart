@@ -56,7 +56,15 @@ class _MyHomePageState extends State<MyHomePage> {
       //使用するところの上位にProviderを入れる
       body: Provider<int>.value(
         value: _counter,
-        child:const Center(child: MyWidget())
+        child: Center(
+          //↓こういうのをConsumerで省略
+          //child: MyWidget()
+          child: Consumer<int>(
+            builder: (context, value, _) => Text(
+              "${value}:consumeを使ってMyWidgetも省略したよ", 
+              style: Theme.of(context).textTheme.headlineMedium)
+          )
+        )
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
