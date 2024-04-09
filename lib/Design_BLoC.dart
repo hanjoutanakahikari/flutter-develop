@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'business_logic.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,33 +33,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  
   //Stream: 非同期に連続したデータの受け渡しができる（いちいちメソッドを呼ぶ必要がなくなる）
-  final _counterStream = StreamController<int>();
+  var intStream = StreamController<int>();
+  //broadcastで複数のlistenに対応
+  var stringStream = StreamController<String>.broadcast();
+
 
   @override
   void initState(){
     super.initState();
     //受け取る側のクラスにstreamを
-    Consumer(_counterStream);
+    Generator(intStream);
+    Coodinator(intStream, stringStream);
+    Consumer(stringStream);
   }
 
   //終了時にstreamを開放する
   @override
   void dispose(){
     super.dispose();
-    _counterStream.close();
-
+    intStream.close();
+    stringStream.close();
   }
 
-  void _incrementCounter() {
-    setState(() {
-      
-      _counter++;
-    });
-    //Streamにカウンター値を流す
-    _counterStream.sink.add(_counter);
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -71,35 +70,24 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              '処理を別々の箇所で同時に非同期に行える',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            //Streamを表示させるwidget
+            StreamBuilder<String>(
+              stream: stringStream.stream,
+              initialData: "", 
+              builder: (context, snapshot){
+                return Text(
+                  '${snapshot.data}',
+                  style:Theme.of(context).textTheme.labelSmall);
+              })
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ), 
     );
   }
 }
-
-class Consumer{
-    //パラメータでStreamを受け取る
-    Consumer(StreamController<int> consumeStream){
-      //Streamをlisten(見張る)してデータがきたら表示
-      consumeStream.stream.listen((data) async{
-        print("$dataを拾いましたよ");
-      });
-    }
-  }
