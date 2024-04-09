@@ -54,16 +54,21 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       //使用するところの上位にProviderを入れる
-      body: Provider<int>.value(
-        value: _counter,
-        child: Center(
+      //MultiProviderで複数の値を取り扱う
+      body: MultiProvider(providers: [
+        Provider<int>.value(value: _counter),
+        Provider<String>.value(value: "複数Provider")
+        ],
+        child: const Center(
           //↓こういうのをConsumerで省略
-          //child: MyWidget()
+          child: MyWidget()
+          /*
           child: Consumer<int>(
             builder: (context, value, _) => Text(
               "${value}:consumeを使ってMyWidgetも省略したよ", 
               style: Theme.of(context).textTheme.headlineMedium)
           )
+          */
         )
       ),
       floatingActionButton: FloatingActionButton(

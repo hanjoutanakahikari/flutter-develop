@@ -11,7 +11,8 @@ class MyWidget extends StatelessWidget {
     //↓こういうやつ
     //MyInheritedWidget myInheritedWidget = MyInheritedWidget.of(context);
     int count = Provider.of<int>(context);
-    return Text(count.toString(), style: Theme.of(context).textTheme.labelLarge);
+    String message = Provider.of<String>(context);
+    return Text("$message\nカウント数は $count", style: Theme.of(context).textTheme.headlineMedium);
   }
 
   
