@@ -50,6 +50,8 @@ dependencies:
   provider: ^6.1.2
   flutter_riverpod: ^2.5.1
   hooks_riverpod: ^2.5.1
+  freezed: ^2.5.1
+  build_runner: ^2.4.9
 
 dev_dependencies:
   flutter_test:
