@@ -62,7 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
               //MyDataの変更を検知
               Consumer<MyData>(
                 builder: (context, mydata, _) => Text(
-                  mydata.value.toStringAsFixed(2),
+                  //mydata.value.toStringAsFixed(2),
+                  //もはやproviderにすら頼らないでcontextの拡張メソッドで対応
+                  //context.selectで値の変更を検知
+                  context.select((MyData mydata) => mydata.value.toStringAsFixed(2)),
                   style: const TextStyle(fontSize: 100),
               )
               ),
