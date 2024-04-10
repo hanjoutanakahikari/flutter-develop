@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'mywidget.dart';
+import 'mydata.dart';
+import 'myslider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,37 +46,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    
-    return Scaffold(
-      appBar: AppBar(
-        
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        
-        title: Text(widget.title),
-      ),
-      //使用するところの上位にProviderを入れる
-      //MultiProviderで複数の値を取り扱う
-      body: MultiProvider(providers: [
-        Provider<int>.value(value: _counter),
-        Provider<String>.value(value: "複数Provider")
-        ],
-        child: const Center(
-          //↓こういうのをConsumerで省略
-          child: MyWidget()
-          /*
-          child: Consumer<int>(
-            builder: (context, value, _) => Text(
-              "${value}:consumeを使ってMyWidgetも省略したよ", 
-              style: Theme.of(context).textTheme.headlineMedium)
-          )
-          */
+    //MyDataを持つ
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => MyData(),
+      child: Scaffold(
+        appBar: AppBar(
+          
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          
+          title: Text(widget.title),
+        ),
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //MyDataの変更を検知
+              Consumer<MyData>(
+                builder: (context, mydata, _) => Text(
+                  mydata.value.toStringAsFixed(2),
+                  style: const TextStyle(fontSize: 100),
+              )
+              ),
+              const MySlider()
+            ]
         )
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), 
+      )
     );
   }
 }
