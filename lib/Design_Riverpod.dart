@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'ReMydata.dart';
 
 //グローバル変数にproviderを定義(上位にInheritedWidgetやproviderを挟む必要がなくなる)
@@ -58,30 +58,34 @@ class _MyHomePageState extends State<MyHomePage> {
         
         title: Text(widget.title),
       ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //Consumerでproviderから取得
-            Consumer(builder:(context, ref, child){
-              return Text(
-                //プロバイダーの値にアクセスするためにwatchでstateを監視
-                ref.watch(_mydataProvider).toStringAsFixed(2),
-                style: const TextStyle(fontSize: 50),
-              );
-            }),
-            //Consumerでproviderから取得
-            Consumer(builder:(context, ref, child){
-              //mysliderが不要になる
-              return Slider(
-                //プロバイダーの値にアクセスするためにwatchでstateを監視
-                value: ref.watch(_mydataProvider),
-                //changeStateで状態を変更
-                onChanged:(value) => ref.read(_mydataProvider.notifier).changeState(value),
-              );
-            })
-          ]
-      )
-    );
+      body: const MyContents());
   }
 }
 
+//HookComsumerWidgetを継承するため切り出し
+class MyContents extends HookConsumerWidget {
+  const MyContents({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref){
+
+    //ref.watchでプロバイダーにアクセスしスライダー値を管理
+    double slidevalue = ref.watch(_mydataProvider);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        //consumerは不要
+        Text(
+          slidevalue.toStringAsFixed(2),
+          style: const TextStyle(fontSize: 50),
+        ),
+        Slider(
+          value: slidevalue,
+          onChanged:(value) {ref.read(_mydataProvider.notifier).changeState(value);},
+        )
+      ]
+    );
+  } 
+  
+}
