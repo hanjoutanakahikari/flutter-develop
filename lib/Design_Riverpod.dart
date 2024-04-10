@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'ReMydata.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-//グローバル変数にproviderを定義(上位にInheritedWidgetやproviderを挟む必要がなくなる)
-final _mydataProvider = StateNotifierProvider<MyData, double>((ref) => MyData());
-
+//usestateによってStateNotifierProviderやProviderScope不要に
+//言わずもがなmydata.dartも不要に
 void main() {
   runApp(
-    //providerScopeを設定
-    const ProviderScope(child: MyApp())
+    MyApp()
   );
 }
 
@@ -69,20 +67,19 @@ class MyContents extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref){
 
-    //ref.watchでプロバイダーにアクセスしスライダー値を管理
-    double slidevalue = ref.watch(_mydataProvider);
+    //useStateでスライダー値を管理(setState(再描画)の役割も果たす)
+    final slidevalue = useState<double>(0.5);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        //consumerは不要
         Text(
-          slidevalue.toStringAsFixed(2),
+          slidevalue.value.toStringAsFixed(2),
           style: const TextStyle(fontSize: 50),
         ),
         Slider(
-          value: slidevalue,
-          onChanged:(value) {ref.read(_mydataProvider.notifier).changeState(value);},
+          value: slidevalue.value,
+          onChanged:(value)=>slidevalue.value = value
         )
       ]
     );
