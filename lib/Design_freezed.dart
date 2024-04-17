@@ -1,4 +1,5 @@
 import 'user.dart';
+import 'dart:convert';
 
 void main(){
   //ユーザー作成
@@ -23,4 +24,14 @@ void main(){
   print(user2);
   //↑上はできても↓下はエラー
   //user1.name = "お前は誰だ";
+
+  //JSON文字列→Map→JSON文字列
+  String jsonString  = '{"name":"金曜日のあの人", "age":13}';
+  User fromJsonUser = User.fromJson(json.decode(jsonString));
+  print(fromJsonUser);
+
+  //Userクラス→Map→JSON文字列
+  User toJsonUser = User('Json', 64);
+  Map<String, dynamic> jsonData = toJsonUser.toJson();
+  print(jsonData);
 }
